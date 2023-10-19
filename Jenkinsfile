@@ -5,6 +5,7 @@ pipeline {
         CI= 'false'
     }
 
+
     stages {
         stage('Checkout') {
             steps {
@@ -13,7 +14,9 @@ pipeline {
             }
         }
 
-        stage('Build') {
+
+
+        stage('Build') { 
             steps {
                 // Install project dependencies and build the React app
                 sh 'npm install'
@@ -27,6 +30,21 @@ pipeline {
         //         sh 'npm test'
         //     }
         // }
+                stage('Build and Run Docker Container') {
+            steps {
+                script {
+                    // Define your Docker image name and tag
+                    def dockerImageName = 'my-react-app'
+                    def dockerImageTag = "${1.0.0}"  // Use the Jenkins build number as the tag
+
+                    // Build the Docker image from the Dockerfile
+                    sh "docker build -t ${dockerImageName}:${dockerImageTag} -f Dockerfile ."
+
+                    // Run the Docker container from the image
+                    sh "docker run -d -p 80:80 ${dockerImageName}:${dockerImageTag}"
+                }
+            }
+        }
 
         stage('Deploy') {
             steps {
