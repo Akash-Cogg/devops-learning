@@ -38,7 +38,7 @@ pipeline {
                     def dockerImageTag = "1.0.0"  // Use the Jenkins build number as the tag
 
                     // Build the Docker image from the Dockerfile
-                    sh "docker build -t ${dockerImageName}:${dockerImageTag} -f Dockerfile ."
+                    sh "docker build -t ${dockerImageName}:${dockerImageTag} -f dockerfile ."
 
                     // Run the Docker container from the image
                     sh "docker run -d -p 80:80 ${dockerImageName}:${dockerImageTag}"
