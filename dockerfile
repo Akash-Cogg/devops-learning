@@ -1,11 +1,13 @@
 # Use an official Node.js runtime as the base image
-FROM node:14
+FROM node:19-alpine
 
 # Set the working directory within the container
-WORKDIR /src
 
 # Copy the package.json and package-lock.json files to the working directory
-COPY package*.json ./
+COPY package*.json ./app/
+COPY src /app/
+
+WORKDIR /app
 
 # Install project dependencies
 RUN npm install
