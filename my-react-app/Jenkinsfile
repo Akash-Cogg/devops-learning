@@ -1,0 +1,47 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout your code repository, e.g., from Git
+                checkout scm
+            }
+        }
+
+        stage('Build') {
+            steps {
+                // Install project dependencies and build the React app
+                sh 'npm install'
+                sh 'npm run build'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                // Run tests (e.g., unit tests, integration tests)
+                sh 'npm test'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                // Deploy your React app to a web server or hosting platform
+                // You can use tools like rsync, SCP, or deploy to a cloud service.
+                // Example: Deploy to an AWS S3 bucket
+                sh 'aws s3 sync build/ s3://your-s3-bucket-name'
+            }
+        }
+    }
+
+    post {
+        success {
+            // This block runs when all stages are successful
+            echo 'Deployment successful!'
+        }
+        failure {
+            // This block runs when any stage fails
+            echo 'Deployment failed!'
+        }
+    }
+}
