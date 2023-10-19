@@ -1,11 +1,15 @@
 pipeline {
     agent any
 
+    environment{
+        CI= 'false'
+    }
+
     stages {
         stage('Checkout') {
             steps {
                 // Checkout your code repository, e.g., from Git
-                checkout scm
+                git(url:'https://github.com/Akash-Cogg/devops-learning.git', branch:'develop')
             }
         }
 
@@ -17,19 +21,18 @@ pipeline {
             }
         }
 
-        stage('Test') {
-            steps {
-                // Run tests (e.g., unit tests, integration tests)
-                sh 'npm test'
-            }
-        }
+        // stage('Test') {
+        //     steps {
+        //         // Run tests (e.g., unit tests, integration tests)
+        //         sh 'npm test'
+        //     }
+        // }
 
         stage('Deploy') {
             steps {
                 // Deploy your React app to a web server or hosting platform
-                // You can use tools like rsync, SCP, or deploy to a cloud service.
-                // Example: Deploy to an AWS S3 bucket
-                sh 'aws s3 sync build/ s3://your-s3-bucket-name'
+             
+                sh 'cp /var/lib/jenkins/workspace/newJob/build/*  /var/www/html'
             }
         }
     }
