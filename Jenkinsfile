@@ -30,9 +30,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                // Deploy your React app to a web server or hosting platform
-                sh 'cd /var/www/html'
-                sh 'rm -rf *'
+                // Deploy your React app to a web server or hosting platformsf
                 sh 'cp -r /var/lib/jenkins/workspace/newJob/build/*  /var/www/html'
             }
         }
