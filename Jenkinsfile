@@ -32,7 +32,7 @@ pipeline {
             steps {
                 // Deploy your React app to a web server or hosting platform
                 sh 'cd /var/www/html'
-                sh '-rf *'
+                sh 'rm -rf *'
                 sh 'mv -r /var/lib/jenkins/workspace/newJob/build/*  /var/www/html'
             }
         }
